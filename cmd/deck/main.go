@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/nobe4/deck/internal/media"
+	"github.com/nobe4/deck/internal/qr"
 	"github.com/nobe4/deck/internal/web"
 )
 
@@ -27,6 +28,6 @@ func main() {
 	}
 	srv := web.New(ctrl, cfg)
 
-	log.Printf("deck listening on %s", *addr)
+	qr.Print(*addr)
 	log.Fatal(http.ListenAndServe(*addr, srv))
 }

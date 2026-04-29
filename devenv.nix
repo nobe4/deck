@@ -26,7 +26,7 @@ in
 
   scripts = {
     run.exec = ''
-      find . | entr -r bash -c 'CGO_ENABLE=1 go run cmd/deck/main.go'
+      find . | entr -c -r bash -c 'CGO_ENABLE=1 go run cmd/deck/main.go'
     '';
     lint.exec = ''
       golangci-lint run
