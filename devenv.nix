@@ -31,6 +31,7 @@ in
     lint.exec = ''
       golangci-lint run
       clang-format -i ./internal/media/bridge_darwin.*
+      prettier . -w
     '';
   };
 }

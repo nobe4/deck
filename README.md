@@ -3,9 +3,7 @@
 A lightweight web-based media controller for your system. Control volume and
 media playback from any device on your local network.
 
-
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/95021992-8d6d-4e3e-9eac-29e41d7d2784" /> <img width="300" alt="image" src="https://github.com/user-attachments/assets/6bfefed1-6230-4ba3-91b9-0495caa6fd04" />
-
 
 ## Features
 
@@ -17,14 +15,14 @@ media playback from any device on your local network.
 ## System Requirements
 
 - macOS
-    - Built-in system audio support via CoreAudio
+  - Built-in system audio support via CoreAudio
 - Linux
-    - Volume control, at least one of:
-      - `wpctl` (WirePlumber/PipeWire)
-      - `pactl` (PulseAudio)
-      - `amixer` (ALSA)
-    - Media playback control:
-      - `playerctl` (MPRIS/D-Bus)
+  - Volume control, at least one of:
+    - `wpctl` (WirePlumber/PipeWire)
+    - `pactl` (PulseAudio)
+    - `amixer` (ALSA)
+  - Media playback control:
+    - `playerctl` (MPRIS/D-Bus)
 
 ## Installation
 
@@ -43,6 +41,7 @@ go build -o deck ./cmd/deck
 ## Usage
 
 Basic usage:
+
 ```bash
 deck
 deck -h
