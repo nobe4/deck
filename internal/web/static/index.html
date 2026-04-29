@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Deck</title>
+    <style>
+      {{template "main.css" .}}
+    </style>
+  </head>
+  <body>
+    <div id="error" class="error"></div>
+
+    <div class="grid">
+      <div class="playpause" style="grid-area: 1 / 1" title="Play/Pause">
+        <button>⏯</button>
+      </div>
+      <div
+        class="volume-control vertical"
+        style="grid-area: 1 / 2 / 3"
+        title="Volume"
+      >
+        <label>🔊 <span class="volume-label">--</span></label>
+      </div>
+      <div class="next" style="grid-area: 2 / 1" title="Next">
+        <button>⏭</button>
+      </div>
+      <div class="previous" style="grid-area: 3 / 1" title="Previous">
+        <button>⏮</button>
+      </div>
+      <div class="mute" style="grid-area: 3 / 2" title="Mute">
+        <button>🔇</button>
+      </div>
+    </div>
+
+    <script>
+      {{template "main.js" .}}
+    </script>
+  </body>
+</html>

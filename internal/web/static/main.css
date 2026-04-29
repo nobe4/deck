@@ -1,0 +1,104 @@
+:root {
+  --color-bg: #e8e8e8;
+  --color-active: #cccccc;
+  --color-error: #cc6666;
+  --color-text: #000;
+
+  --cols: 2;
+  --rows: 3;
+  --gap: min(2vw, 2dvh);
+  --cell: min(
+    calc((100vw - var(--cols) * var(--gap)) / var(--cols)),
+    calc((100dvh - var(--rows) * var(--gap)) / var(--rows))
+  );
+}
+
+html {
+  height: 100dvh;
+  margin: 0;
+}
+
+body {
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  font-family: system-ui, sans-serif;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.error:empty {
+  display: none;
+}
+
+.error {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background: var(--color-error);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--cell));
+  grid-auto-rows: var(--cell);
+  gap: var(--gap);
+}
+
+.grid > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.grid > * button {
+  all: unset;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.4);
+  cursor: pointer;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.grid > * label {
+  font-size: calc(var(--cell) * 0.2);
+}
+
+.volume-control {
+  cursor: pointer;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.volume-control.vertical {
+  background: linear-gradient(
+    to top,
+    var(--color-active) var(--volume, 0%),
+    var(--color-bg) var(--volume, 0%)
+  );
+}
+
+.volume-control.horizontal {
+  flex-direction: row;
+  background: linear-gradient(
+    to right,
+    var(--color-active) var(--volume, 0%),
+    var(--color-bg) var(--volume, 0%)
+  );
+}
