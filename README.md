@@ -4,7 +4,7 @@ A lightweight web-based media controller for your system. Control volume and
 media playback from any device on your local network.
 
 
-<img width="508" height="566" alt="image" src="https://github.com/user-attachments/assets/95021992-8d6d-4e3e-9eac-29e41d7d2784" /> <img width="740" height="1116" alt="image" src="https://github.com/user-attachments/assets/6bfefed1-6230-4ba3-91b9-0495caa6fd04" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/95021992-8d6d-4e3e-9eac-29e41d7d2784" /> <img width="300" alt="image" src="https://github.com/user-attachments/assets/6bfefed1-6230-4ba3-91b9-0495caa6fd04" />
 
 
 ## Features
