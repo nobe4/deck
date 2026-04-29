@@ -5,6 +5,7 @@ package media
 import (
 	"fmt"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -42,4 +43,16 @@ func run(name string, args ...string) (string, error) {
 		return "", fmt.Errorf("%s %s: %w", name, strings.Join(args, " "), err)
 	}
 	return strings.TrimSpace(string(out)), nil
+}
+
+func parsePercentage(output, separator string) (int, error) {
+	_, after, ok := strings.Cut(output, separator)
+	if !ok {
+		return 0, fmt.Errorf("unexpected output format: %q", output)
+	}
+	pct, _, ok := strings.Cut(after, "%")
+	if !ok {
+		return 0, fmt.Errorf("unexpected output format: %q", output)
+	}
+	return strconv.Atoi(strings.TrimSpace(pct))
 }

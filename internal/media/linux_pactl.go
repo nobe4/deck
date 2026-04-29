@@ -4,7 +4,6 @@ package media
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -18,15 +17,7 @@ func (p *pactl) getVolume() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	_, after, ok := strings.Cut(out, "/ ")
-	if !ok {
-		return 0, fmt.Errorf("unexpected pactl output: %q", out)
-	}
-	pct, _, ok := strings.Cut(after, "%")
-	if !ok {
-		return 0, fmt.Errorf("unexpected pactl output: %q", out)
-	}
-	return strconv.Atoi(strings.TrimSpace(pct))
+	return parsePercentage(out, "/ ")
 }
 
 func (p *pactl) setVolume(level int) error {

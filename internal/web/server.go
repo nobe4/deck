@@ -1,3 +1,4 @@
+// Package web provides HTTP server and API handlers for media control.
 package web
 
 import (
@@ -21,18 +22,23 @@ type Server struct {
 	index []byte
 }
 
-func New(ctrl media.Controller, cfg Config) *Server {
+func New(ctrl media.Controller, cfg Config) (*Server, error) {
+	index, err := renderIndex(cfg)
+	if err != nil {
+		return nil, err
+	}
+
 	s := &Server{
 		ctrl:  ctrl,
 		mux:   http.NewServeMux(),
-		index: renderIndex(cfg),
+		index: index,
 	}
 
 	s.mux.HandleFunc("GET /", s.serveIndex)
 	s.mux.HandleFunc("GET /api/{field}", s.getField)
 	s.mux.HandleFunc("POST /api/{field}", s.setField)
 
-	return s
+	return s, nil
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +47,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) serveIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	_, _ = w.Write(s.index)
+	if _, err := w.Write(s.index); err != nil {
+		log.Printf("write index: %v", err)
+	}
 }
 
 func (s *Server) getField(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +63,9 @@ func (s *Server) getField(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(map[string]any{field: val})
+	if err := json.NewEncoder(w).Encode(map[string]any{field: val}); err != nil {
+		log.Printf("encode response: %v", err)
+	}
 }
 
 func (s *Server) setField(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +79,13 @@ func (s *Server) setField(w http.ResponseWriter, r *http.Request) {
 
 	if err := s.set(field, body); err != nil {
 		log.Printf("set %s: %v", field, err)
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		status := http.StatusInternalServerError
+		if _, ok := err.(*json.SyntaxError); ok {
+			status = http.StatusBadRequest
+		} else if _, ok := err.(*json.UnmarshalTypeError); ok {
+			status = http.StatusBadRequest
+		}
+		http.Error(w, err.Error(), status)
 		return
 	}
 

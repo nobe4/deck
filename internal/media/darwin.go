@@ -37,11 +37,15 @@ func (d *darwin) next() error      { C.MediaKey(17); return nil }
 func (d *darwin) previous() error  { C.MediaKey(18); return nil }
 
 func (d *darwin) mute() error {
-	muted := int(C.GetMute())
-	if muted < 0 {
-		return fmt.Errorf("get mute failed")
+	muted, err := d.isMuted()
+	if err != nil {
+		return err
 	}
-	if C.SetMute(C.int(1-muted)) != 0 {
+	newState := 0
+	if !muted {
+		newState = 1
+	}
+	if C.SetMute(C.int(newState)) != 0 {
 		return fmt.Errorf("set mute failed")
 	}
 	return nil

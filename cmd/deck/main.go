@@ -26,7 +26,10 @@ func main() {
 		DebounceMs:   *debounceMs,
 		TemplatePath: *tmplPath,
 	}
-	srv := web.New(ctrl, cfg)
+	srv, err := web.New(ctrl, cfg)
+	if err != nil {
+		log.Fatalf("web: %v", err)
+	}
 
 	qr.Print(*addr)
 	log.Fatal(http.ListenAndServe(*addr, srv))

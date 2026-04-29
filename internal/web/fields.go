@@ -25,6 +25,9 @@ func (s *Server) set(field string, body []byte) error {
 		if err := json.Unmarshal(body, &req); err != nil {
 			return err
 		}
+		if req.Volume < 0 || req.Volume > 100 {
+			return fmt.Errorf("volume must be between 0 and 100, got %d", req.Volume)
+		}
 		return s.ctrl.SetVolume(req.Volume)
 
 	case "playpause":

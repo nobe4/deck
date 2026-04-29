@@ -4,7 +4,6 @@ package media
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -17,15 +16,7 @@ func (a *amixer) getVolume() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	_, after, ok := strings.Cut(out, "[")
-	if !ok {
-		return 0, fmt.Errorf("unexpected amixer output: %q", out)
-	}
-	pct, _, ok := strings.Cut(after, "%]")
-	if !ok {
-		return 0, fmt.Errorf("unexpected amixer output: %q", out)
-	}
-	return strconv.Atoi(pct)
+	return parsePercentage(out, "[")
 }
 
 func (a *amixer) setVolume(level int) error {

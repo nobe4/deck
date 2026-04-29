@@ -1,3 +1,4 @@
+// Package qr provides utilities for generating QR codes to display server URLs.
 package qr
 
 import (
@@ -76,13 +77,13 @@ func printQR(url string) error {
 func Print(addr string) {
 	url, err := buildURL(addr)
 	if err != nil {
+		fmt.Printf("Warning: failed to build URL: %v\n", err)
 		fmt.Printf("\nListening on %s\n\n", addr)
 		return
 	}
 
 	if err := printQR(url); err != nil {
-		fmt.Printf("\nListening on %s\n\n", url)
-		return
+		fmt.Printf("Warning: failed to generate QR code: %v\n", err)
 	}
 
 	fmt.Printf("%s\n", url)
